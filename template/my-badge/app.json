@@ -1,0 +1,13 @@
+{
+  "id": "my-badge",
+  "name": "My Badge",
+  "version": "1.0.0",
+  "author": "your name",
+  "description": "One sentence: what the badge shows. Say it's a badge plugin, found in Badge.",
+  "category": "badges",
+  "api": 1,
+  "type": "plugin",
+  "extends": "badge",
+  "permissions": [],
+  "license": ""
+}

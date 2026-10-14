@@ -2,7 +2,7 @@
 
 - **Id and name:**
 - **What it does:**
-- **Buttons:** what A, B and hold B do
+- **Buttons:** what A, B and hold B do (for a plugin: which app it adds to, and where it shows)
 
 ## Checklist
 

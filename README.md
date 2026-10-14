@@ -7,10 +7,15 @@ in. Every app is tried automatically and read by a person before it's listed.
 ## Writing an app
 
 The guide has everything: the folder layout, the `app.json` fields, the `unidex.*` API, the limits and an
-example. Read [Writing apps for unidex](https://github.com/Forrest404/unidex/blob/main/docs/APPS.md). Plugins are
-the same, with `"type": "plugin"` (see the guide's Plugins section; `apps/today-badge` is one).
+example. Read [Writing apps for unidex](https://github.com/Forrest404/unidex/blob/main/docs/APPS.md).
 
 `template/my-app/` is a starting point. Copy it, rename the folder to your app's id, and change `app.json`.
+
+## Writing a plugin
+
+A plugin adds to one of the built-in apps instead of being an app of its own. For now that's Badge: a badge
+plugin draws a badge that can change, like today's date or the moon. [Writing plugins](PLUGINS.md) explains how
+they run, what they can and can't do, and how to try one. `template/my-badge/` is a working one to start from.
 
 To try it on your own unidex before sending it in, plug it in and run, from a copy of the
 [unidex](https://github.com/Forrest404/unidex) repository:

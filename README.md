@@ -26,7 +26,7 @@ python3 tools/appinstall.py install path/to/your-app
    then install the app in the unidex emulator and press every button. If it shows "App error", the check fails
    and says where. The screenshots it takes are attached to the run, under Artifacts.
 4. Then the owner of the store reads the code and tries it, and either:
-   - **accepts it:** the pull request is merged and the app appears in the store soon after, or
+   - **accepts it:** the pull request is merged, and the app appears in the store within about 6 hours, or
    - **declines it:** the pull request is closed with a comment saying why. You can fix it and open a new one.
 
 To update an app you already have in the store, change its folder, raise `version`, and open a new pull request.

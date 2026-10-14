@@ -1,0 +1,76 @@
+# Checks every app on each pull request (and on main): the rules in app.json, Lua syntax, and a run in the unidex
+# emulator that presses every button. The checks' code comes from the unidex repository, not from the pull
+# request; the apps' own code only ever runs inside the emulator (WebAssembly). No secrets are used.
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: registry
+          fetch-depth: 0
+
+      - uses: actions/checkout@v4
+        with:
+          repository: Forrest404/unidex
+          ref: beta  # the apps code is on beta for now; main once it's released
+          path: unidex
+
+      - name: Only apps/ changes
+        if: github.event_name == 'pull_request'
+        run: |
+          cd registry
+          outside=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD" | grep -v '^apps/' || true)
+          if [ -n "$outside" ]; then
+            echo "This pull request changes files outside apps/ (the store owner will look at these by hand):"
+            echo "$outside"
+            [ "${{ github.event.pull_request.user.login }}" = "Forrest404" ] || exit 1
+          fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: The rules (app.json, names, sizes, limits)
+        run: python3 unidex/tools/make_store.py registry/apps
+
+      - name: Lua syntax (read only, nothing runs)
+        run: |
+          sudo apt-get install -y -qq lua5.4 >/dev/null
+          find registry/apps -name '*.lua' -print0 | xargs -0 -n1 luac5.4 -p -o /dev/null
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.platformio
+            ~/emsdk
+          key: emu-${{ hashFiles('unidex/platformio.ini') }}-3.1.74
+
+      - name: The emulator
+        run: |
+          pip install -q platformio
+          (cd unidex && pio pkg install -e dev)
+          [ -d ~/emsdk ] || git clone --depth 1 --branch 3.1.74 https://github.com/emscripten-core/emsdk.git ~/emsdk
+          ~/emsdk/emsdk install 3.1.74 >/dev/null
+          ~/emsdk/emsdk activate 3.1.74 >/dev/null
+          EMSDK_ENV="$HOME/emsdk/emsdk_env.sh" bash unidex/emu/build.sh
+
+      - name: Each app, opened and every button pressed
+        run: node unidex/emu/test/app_smoke.mjs registry/apps/* --shots shots
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshots
+          path: shots
+          if-no-files-found: ignore

@@ -1,0 +1,30 @@
+# Labels a pull request "in review" when it opens, and "accepted" or "declined" when it closes. It never checks out
+# or runs anything from the pull request, so it can safely label pull requests from forks.
+name: Labels
+
+on:
+  pull_request_target:
+    types: [opened, reopened, closed]
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          ACTION: ${{ github.event.action }}
+          MERGED: ${{ github.event.pull_request.merged }}
+        run: |
+          if [ "$ACTION" != closed ]; then
+            gh pr edit "$PR" -R "$REPO" --add-label "in review"
+          elif [ "$MERGED" = true ]; then
+            gh pr edit "$PR" -R "$REPO" --remove-label "in review" --add-label "accepted"
+          else
+            gh pr edit "$PR" -R "$REPO" --remove-label "in review" --add-label "declined"
+          fi

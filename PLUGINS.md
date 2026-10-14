@@ -6,7 +6,8 @@ same kind of folder as an app (an `app.json`, a `main.lua`, a README), written i
 never gets the buttons.
 
 This page covers what's different about plugins. For everything they share with apps (the drawing calls, data
-files, fonts, limits), see [Writing apps for unidex](https://github.com/Forrest404/unidex/blob/main/docs/APPS.md).
+files, fonts, limits), see [Building apps](APPS.md) and the reference,
+[Writing apps for unidex](https://github.com/Forrest404/unidex/blob/main/docs/APPS.md).
 
 ## Which apps take plugins
 

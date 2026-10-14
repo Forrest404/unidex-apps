@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "your name",
   "description": "One sentence: what it does.",
+  "category": "other",
   "api": 1,
   "type": "app",
   "permissions": [],

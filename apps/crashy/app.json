@@ -1,0 +1,11 @@
+{
+  "id": "crashy",
+  "name": "Crashy",
+  "version": "1.0.0",
+  "author": "test",
+  "description": "A test app that breaks when B is pressed, to check the review flow.",
+  "api": 1,
+  "type": "app",
+  "permissions": [],
+  "license": "MIT"
+}

@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: Forrest404/unidex
-          ref: beta  # the apps code is on beta for now; main once it's released
+          ref: main
           path: unidex
 
       - name: Only apps/ changes

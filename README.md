@@ -1,13 +1,14 @@
 # unidex apps
 
-The apps in the store on the [unidex website](https://forrest404.github.io/unidex/store.html). Each one is a
-folder in `apps/`, written in Lua for the unidex e-ink device. Anyone can write one and send it in. Every app is
-read and tried before it is listed.
+The apps and plugins in the store on the [unidex website](https://forrest404.github.io/unidex/store.html). Each one
+is a folder in `apps/`, written in Lua for the unidex e-ink device (v1.7 or newer). Anyone can write one and send it
+in. Every app is tried automatically and read by a person before it's listed.
 
 ## Writing an app
 
 The guide has everything: the folder layout, the `app.json` fields, the `unidex.*` API, the limits and an
-example. Read [Writing apps for unidex](https://github.com/Forrest404/unidex/blob/beta/docs/APPS.md).
+example. Read [Writing apps for unidex](https://github.com/Forrest404/unidex/blob/main/docs/APPS.md). Plugins are
+the same, with `"type": "plugin"` (see the guide's Plugins section; `apps/today-badge` is one).
 
 `template/my-app/` is a starting point. Copy it, rename the folder to your app's id, and change `app.json`.
 
@@ -33,10 +34,21 @@ To update an app you already have in the store, change its folder, raise `versio
 
 ## What gets checked by hand
 
-The automatic checks can't tell what an app is for. The review looks at what it does, whether its permissions
-match that (an app that asks for `wifi` should say what it connects to and why), and whether it treats the people
-using it fairly. The full rules for what is accepted will be written here before submissions open.
+The automatic checks catch crashes and broken files. A person then reads every app before it's listed, and looks at
+these things. An app is declined, with the reason written on the pull request, if:
 
-## Status
+- **It doesn't work,** or doesn't do what its description says.
+- **It asks for more than it needs.** An app with the `wifi` permission must say in its README which addresses it
+  connects to and why, and only use them for that.
+- **It collects or sends anything about the person using it** that they wouldn't expect, or sends anything at all
+  without saying so.
+- **It's harmful or deceptive:** it pretends to be something it isn't (another app, the device's own screens, a
+  login page), tries to get round the sandbox, or is meant to hurt or harass anyone.
+- **It isn't yours to share.** Every app names its licence in `app.json`, and opening a pull request means you
+  have the right to share everything in the folder under it.
+- **It's offensive,** or not suitable for a device that people carry around, show their friends and use at school.
 
-Submissions are not open yet. The store, the checks and this process are being tried out first.
+Being declined isn't final: fix what the comment says and open a new pull request. Apps that are already listed can
+be removed later if they turn out to break these rules; the store page then stops offering them.
+
+Questions, or a problem with an app in the store? [Open an issue](https://github.com/Forrest404/unidex-apps/issues).

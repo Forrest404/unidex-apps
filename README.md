@@ -1,6 +1,6 @@
 # unidex apps
 
-The apps and plugins in the store on the [unidex website](https://forrest404.github.io/unidex/store.html). Each one
+The apps and plugins in the store on the [unidex website](https://tools.unidex.shop/store.html). Each one
 is a folder in `apps/`, written in Lua for the unidex e-ink device (v1.7 or newer). Anyone can write one and send it
 in. Every app is tried automatically and read by a person before it's listed.
 

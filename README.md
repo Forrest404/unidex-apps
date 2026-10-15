@@ -8,8 +8,7 @@ in. Every app is tried automatically and read by a person before it's listed.
 
 [Building apps](APPS.md) is the place to start: how an app runs, laying out a screen, keeping data through sleep,
 patterns that work with two buttons, going online, and trying it. `template/my-app/` is a working app to copy.
-Every call, with all its arguments, is in the reference,
-[Writing apps for unidex](https://github.com/Forrest404/unidex/blob/main/docs/APPS.md).
+Every call, in one short list, is in [The unidex API](API.md).
 
 ## Writing a plugin
 

@@ -4,8 +4,7 @@ An app is a small folder of Lua that runs on the unidex: its own screen, opened 
 is the practical side: how an app runs, how to lay out a screen, how to keep its data through sleep, the patterns
 that work on a two-button e-ink device, and how to try it and send it in.
 
-The full list of calls, with every argument, is in the reference:
-[Writing apps for unidex](https://github.com/Forrest404/unidex/blob/main/docs/APPS.md). To add to a built-in app
+Every call, with its arguments, is in one short list: [The unidex API](API.md). To add to a built-in app
 instead, see [Writing plugins](PLUGINS.md).
 
 ## Start from the template
@@ -234,11 +233,9 @@ it comes out over USB.
 
 ## Trying it
 
-- **In the emulator:** from a copy of the [unidex](https://github.com/Forrest404/unidex) repository, build it and
-  open `emu/web/try.html` as the [reference](https://github.com/Forrest404/unidex/blob/main/docs/APPS.md#trying-it)
-  describes. Choose your app's folder under "Try your app", then open it from Apps on the simulated screen. Choose
-  the folder again after each change. The emulator has no WiFi, so an online app should show its "no connection"
-  screen there.
+- **In the emulator:** open [Try unidex](https://tools.unidex.shop/try.html) and choose your app's folder under
+  "Try your app", then open it from Apps on the simulated screen. Choose the folder again after each change. The
+  emulator has no WiFi, so an online app should show its "no connection" screen there.
 - **Automatically:** `node emu/test/app_smoke.mjs path/to/your-app --shots <folder>` opens your app in the
   emulator, presses every button, fails if it ever shows "App error", and saves a screenshot after each press. The
   store runs the same check on every submission.

@@ -6,8 +6,7 @@ same kind of folder as an app (an `app.json`, a `main.lua`, a README), written i
 never gets the buttons.
 
 This page covers what's different about plugins. For everything they share with apps (the drawing calls, data
-files, fonts, limits), see [Building apps](APPS.md) and the reference,
-[Writing apps for unidex](https://github.com/Forrest404/unidex/blob/main/docs/APPS.md).
+files, fonts, limits), see [Building apps](APPS.md) and [The unidex API](API.md).
 
 ## Which apps take plugins
 
@@ -133,9 +132,8 @@ the next badge. The device itself never crashes. The usual reasons:
 
 ## Trying it
 
-- **In the emulator:** build it and open `emu/web/try.html` as the
-  [guide](https://github.com/Forrest404/unidex/blob/main/docs/APPS.md#trying-it) describes, and choose your plugin's
-  folder under "Try your app". Then open Badge on the simulated screen and press A until your badge comes up.
+- **In the emulator:** open [Try unidex](https://tools.unidex.shop/try.html) and choose your plugin's folder under
+  "Try your app". Then open Badge on the simulated screen and press A until your badge comes up.
 - **Automatically:** `node emu/test/app_smoke.mjs path/to/your-plugin`, from a copy of the
   [unidex](https://github.com/Forrest404/unidex) repository. It finds your badge in Badge, fails if it shows "This
   plugin failed", and saves a screenshot with `--shots <folder>`. The store runs the same check on every submission.

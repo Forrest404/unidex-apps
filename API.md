@@ -81,7 +81,7 @@ unidex.data.write("best", tostring(best + 1))
 | `unidex.toast(text)` | A short message over the screen, up to 40 characters |
 | `unidex.wake_in(ms)` | Asks to be woken for a `tick()` after this many milliseconds (between 1 second and 24 hours). It only works while the device is awake. |
 | `unidex.random(n)` | A random whole number from 1 to `n` |
-| `unidex.api` | The API level of this firmware, now `1` |
+| `unidex.api` | The API level of this firmware, now `2` (`1` before `unidex.wifi`) |
 
 ```lua
 local t = unidex.time()
@@ -103,6 +103,15 @@ Only for apps with `"permissions": ["wifi"]` in `app.json`.
 ```lua
 local status, body = unidex.http.get("https://example.com/today.txt")
 if status == 200 then unidex.data.write("cache", body) end
+```
+
+| Call | What it does |
+|---|---|
+| `unidex.wifi.scan()` | The WiFi networks nearby, up to 64: a list of `{ssid=, rssi=, security=}` (security is `open`, `WEP`, `WPA`, `WPA2`, `WPA2-E` or `WPA3`). Hidden networks are left out, and a name can appear once per access point. Never a network's address. About 2 seconds; returns `nil` and the reason on a low battery or while the radio is busy. Needs `"api": 2`. |
+
+```lua
+local nets, why = unidex.wifi.scan()
+if nets then unidex.toast(#nets .. " networks nearby") else unidex.toast(why) end
 ```
 
 ## Lua itself

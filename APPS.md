@@ -188,6 +188,9 @@ elseif status == nil then
 end
 ```
 
+`unidex.wifi.scan()` lists the networks nearby instead (name, signal, security) and needs `"api": 2` in `app.json`;
+see [API.md](API.md). The Dex app is an example.
+
 - HTTPS only, up to 32 KB of reply, and up to 15 seconds. The screen waits while it works, so fetch when someone
   presses a button, not in `draw()`. The wait doesn't count against your 2 seconds.
 - It returns `nil` and a reason when it can't connect, and it's refused on a low battery. Show that clearly and

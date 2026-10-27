@@ -81,7 +81,8 @@ unidex.data.write("best", tostring(best + 1))
 | `unidex.toast(text)` | A short message over the screen, up to 40 characters |
 | `unidex.wake_in(ms)` | Asks to be woken for a `tick()` after this many milliseconds (between 1 second and 24 hours). It only works while the device is awake. |
 | `unidex.random(n)` | A random whole number from 1 to `n` |
-| `unidex.api` | The API level of this firmware, now `2` (`1` before `unidex.wifi`) |
+| `unidex.frame(ms)` | Shows `draw()` now, in the middle of a function, as an animation frame, then waits `ms` (up to 1000) before going on. At most 60 frames in one go; the screen and the wait don't count against your 2 seconds. Needs `"api": 3`; the Chooser spin is an example. |
+| `unidex.api` | The API level of this firmware, now `3` (`2` before `unidex.frame`, `1` before `unidex.wifi`) |
 
 ```lua
 local t = unidex.time()

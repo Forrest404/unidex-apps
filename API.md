@@ -5,7 +5,8 @@ screen and keeping data through sleep, see [Building apps](APPS.md).
 
 ## The functions you write
 
-The device calls these when things happen. Only `draw()` is required.
+The device calls these when things happen. Only `draw()` is required. A game has four of its own: see
+[Games](#games).
 
 | Function | When it runs | Return |
 |---|---|---|
@@ -82,7 +83,7 @@ unidex.data.write("best", tostring(best + 1))
 | `unidex.wake_in(ms)` | Asks to be woken for a `tick()` after this many milliseconds (between 1 second and 24 hours). It only works while the device is awake. |
 | `unidex.random(n)` | A random whole number from 1 to `n` |
 | `unidex.frame(ms)` | Shows `draw()` now, in the middle of a function, as an animation frame, then waits `ms` (up to 1000) before going on. At most 60 frames in one go; the screen and the wait don't count against your 2 seconds. Needs `"api": 3`; the Chooser spin is an example. |
-| `unidex.api` | The API level of this firmware, now `3` (`2` before `unidex.frame`, `1` before `unidex.wifi`) |
+| `unidex.api` | The API level of this firmware: `4` after v1.9 (`3` before games, `2` before `unidex.frame`, `1` before `unidex.wifi`) |
 
 ```lua
 local t = unidex.time()
@@ -113,6 +114,30 @@ if status == 200 then unidex.data.write("cache", body) end
 ```lua
 local nets, why = unidex.wifi.scan()
 if nets then unidex.toast(#nets .. " networks nearby") else unidex.toast(why) end
+```
+
+## Games
+
+A game plays in Games instead of Apps. In `app.json` it has `"type": "game"`, `"category": "games"` and
+`"api": 4`, and optionally `"frame_ms"`: how often `step()` runs, from 48 to 1000 milliseconds (100 if left out).
+Instead of the button functions, it defines these four. More in [Making games](GAMES.md).
+
+| Function | When it runs | Return |
+|---|---|---|
+| `start(seed)` | A new round. Call `math.randomseed(seed)` and use `math.random`, so a seed replays the round. | nothing |
+| `step(tapped, held)` | Every frame. `tapped`: B was pressed since the last frame. `held`: B is down now. | `"over"` (the round ends), `"moved"` (redraw) or `"still"` (no redraw). Nothing counts as `"moved"`. |
+| `draw()` | The screen needs painting. Paint the whole play screen; there's no header or hints. | nothing |
+| `score()` | The Games app wants the score | a whole number |
+
+The Games app keeps the best score in your data file `best`, so don't use that name.
+
+```lua
+function step(tapped, held)  -- a ball falls, and each tap lifts it
+  if tapped then y = y - 20 end
+  y = y + 2
+  if y > 190 then return "over" end
+  return "moved"
+end
 ```
 
 ## Lua itself

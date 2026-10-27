@@ -5,7 +5,8 @@ is the practical side: how an app runs, how to lay out a screen, how to keep its
 that work on a two-button e-ink device, and how to try it and send it in.
 
 Every call, with its arguments, is in one short list: [The unidex API](API.md). To add to a built-in app
-instead, see [Writing plugins](PLUGINS.md).
+instead, see [Writing plugins](PLUGINS.md). For a one-button game that plays in Games, see
+[Making games](GAMES.md).
 
 ## Start from the template
 
@@ -49,7 +50,7 @@ it's what a delete loses.
 
 - `name` is up to 20 characters, `author` up to 40, `description` up to 140.
 - `category` puts it under one of the store's filters: `games`, `tools`, `time`, `badges`, `learning`, `fun` or
-  `other`.
+  `other`. On the device, an app in `games` is listed in Games instead of Apps (from the firmware after v1.9).
 - `permissions` is empty unless it needs the internet: then `["wifi"]`. The store shows it before anyone installs.
 - `icon` is optional: 40 strings of 40 characters, where `#` is ink and anything else is blank. The store shows it
   beside the app. Without one, the store uses the device's Apps icon.

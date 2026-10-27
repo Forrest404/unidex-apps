@@ -1,6 +1,6 @@
 # unidex apps
 
-The apps and plugins in the store on the [unidex website](https://tools.unidex.shop/store.html). Each one
+The apps, games and plugins in the store on the [unidex website](https://tools.unidex.shop/store.html). Each one
 is a folder in `apps/`, written in Lua for the unidex e-ink device (v1.7 or newer). Anyone can write one and send it
 in. Every app is tried automatically and read by a person before it's listed.
 
@@ -10,6 +10,13 @@ in. Every app is tried automatically and read by a person before it's listed.
 patterns that work with two buttons, going online, and trying it. `template/my-app/` is a working app to copy.
 Every call, in one short list, is in [The unidex API](API.md).
 
+## Writing a game
+
+A game is played in Games, next to Flappy, Dino, Stack and Jetpack, with B as its one button. You write four
+functions (start a round, step a frame, draw it, give the score) and the Games app does the rest: the frames, the
+game-over screen and the best score. [Making games](GAMES.md) explains how, and `template/my-game/` is a working
+one to start from (Hop, also in the store as `apps/hop`). Games need firmware newer than v1.9.
+
 ## Writing a plugin
 
 A plugin adds to one of the built-in apps instead of being an app of its own. For now that's Badge: a badge
@@ -18,8 +25,8 @@ they run, what they can and can't do, and how to try one. `template/my-badge/` i
 
 ## Trying it on your unidex
 
-To try an app or plugin on your own unidex before sending it in, plug it in, press a button, and run this from a
-copy of the [unidex](https://github.com/Forrest404/unidex) repository:
+To try an app, game or plugin on your own unidex before sending it in, plug it in, press a button, and run this
+from a copy of the [unidex](https://github.com/Forrest404/unidex) repository:
 
 ```sh
 python3 tools/appinstall.py install path/to/your-app

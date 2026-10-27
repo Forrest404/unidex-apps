@@ -143,7 +143,7 @@ play can't be replayed. Keep them out of `step()`.
 - **Sleep.** 30 seconds without B ends the round, so the device can go to sleep as usual. You don't need to save
   anything in the middle of a round.
 
-**Hold B** on a store game in the Games list to offload or delete it, as in Apps.
+**Hold B** on anything from the store in the Games list to offload or delete it, as in Apps.
 
 Apps in the `games` category that aren't `"type": "game"` (Dice, Coin & RPS, Dex) are listed under Games too, and
 open as normal apps from there. They aren't in Apps any more. Make yours a game when it's played in rounds with B
@@ -181,7 +181,7 @@ Games app keeps. Most games don't need any.
 
 The limits are the same as for any app: about 2 seconds for one call, about 512 KB of memory, and 64 KB a file. A
 step should take a few milliseconds, so keep the work in each frame small. Breaking a limit, or any other error,
-shows "App error" with the reason.
+ends the round on "This game failed" with the reason and the line; B goes back to the list.
 
 ## Trying it
 

@@ -84,7 +84,8 @@ unidex.data.write("best", tostring(best + 1))
 | `unidex.random(n)` | A random whole number from 1 to `n` |
 | `unidex.frame(ms)` | Shows `draw()` now, in the middle of a function, as an animation frame, then waits `ms` (up to 1000) before going on. At most 60 frames in one go; the screen and the wait don't count against your 2 seconds. Needs `"api": 3`; the Chooser spin is an example. |
 | `unidex.chime()` | Plays the device's chime, about half a second, for a timer or an alarm. Returns `true`, or `false` if it was skipped: Settings > Alert sound is off, it already chimed less than a second ago (so an app can't chime on and on), or the speaker is busy. At Volume 0 it plays silently. The chime doesn't count against your 2 seconds. Needs `"api": 5`. |
-| `unidex.api` | The API level of this firmware: `5` after v1.10 (`4` before `unidex.chime`, `3` before games, `2` before `unidex.frame`, `1` before `unidex.wifi`) |
+| `unidex.climate()` | The temperature and humidity from the device's own sensor: a table with `temperature_c` (°C) and `humidity_rh` (%), or `nil` and the reason if it can't be read. Takes about 20 ms. The sensor is inside the device, so it reads a few degrees warm, more while charging or on WiFi. Needs `"api": 6`. |
+| `unidex.api` | The API level of this firmware: `6` with `unidex.climate` (`5` before it, after v1.10; `4` before `unidex.chime`, `3` before games, `2` before `unidex.frame`, `1` before `unidex.wifi`) |
 
 ```lua
 local t = unidex.time()

@@ -46,12 +46,16 @@ local function round100(x)
   return math.ceil(x / 100 - 1e-9) * 100
 end
 
+-- 20 fu is only ever pinfu tsumo (a pinfu ron is 30 fu), and 25 fu is chiitoitsu (2 han or more)
 local function ron_exists(h, f)
-  return not (h == 1 and (f == 20 or f == 25))
+  return f ~= 20 and not (h == 1 and f == 25)
 end
 
+-- Tsumo can't be 1 han 20 fu (pinfu tsumo is 2 han), 2 han 25 fu (chiitoitsu tsumo is 3 han),
+-- or 1 han 110 fu (as the score tables show it)
 local function tsumo_exists(h, f)
-  return ron_exists(h, f) and not (h == 2 and f == 25)
+  if h == 1 and (f == 20 or f == 25 or f == 110) then return false end
+  return not (h == 2 and f == 25)
 end
 
 local function is_kiriage_hand(h, f)
@@ -162,16 +166,14 @@ local function draw_input()
 end
 
 local function draw_result()
-  unidex.header("Result", "")
+  unidex.header("Result", player == 2 and "Dealer" or "Non-dealer")
 
   local ron_ok   = ron_exists(han, fu)
   local tsumo_ok = tsumo_exists(han, fu)
   local ron, tn, td = compute(han, fu, player)
 
   local han_str = (han == 13) and "13+" or tostring(han)
-  local ctx = (player == 2 and "Dealer" or "Non-dealer")
-             .. "  " .. han_str .. " han  " .. fu .. " fu"
-  unidex.centered(36, ctx, "small")
+  unidex.centered(46, han_str .. " han  " .. fu .. " fu", "small")
 
   -- Big Ron value (or "-" if hand doesn't exist)
   unidex.centered(86, ron_ok and tostring(ron) or "-", "large")
@@ -241,22 +243,25 @@ function onB()
   end
 end
 
-function onBHold()
-  if screen == "input" then
-    if field > 1 then
-      field = field - 1
-      return "partial"
-    end
-    screen = "menu"
+local function step_back()
+  if field > 1 then
+    field = field - 1
     return "partial"
   end
+  screen = "menu"
+  return "partial"
+end
+
+function onBHold()
+  if screen == "input" then return step_back() end
   return nil
 end
 
 function onBack()
   if screen == "menu" then return "exit" end
-  if screen == "input" then return nil end
-  
+  -- Input: hold A goes back, like hold B
+  if screen == "input" then return step_back() end
+
   -- Score screen: hold A exits the app entirely, back to the OS homescreen
   return "exit"
 end

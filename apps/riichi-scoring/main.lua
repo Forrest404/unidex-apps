@@ -17,29 +17,6 @@ local function right_text(x_right, y, text, font, colour)
   unidex.text(x_right - unidex.width(text, font), y, text, font, colour)
 end
 
-local function draw_tile(x, y, w, h, pips)
-  -- Outer frame (tile edge)
-  unidex.rect(x, y, w, h)
-  -- Inner frame (tile face)
-  unidex.rect(x + 2, y + 2, w - 4, h - 4)
-  
-  local cx = x + math.floor(w / 2)
-  local cy = y + math.floor(h / 2)
-  
-  if pips == 1 then
-    unidex.fill(cx - 4, cy - 4, 8, 8)
-  elseif pips == 2 then
-    -- 2-pin: two dots, vertical
-    unidex.fill(cx - 4, cy - 15, 8, 8)
-    unidex.fill(cx - 4, cy + 7, 8, 8)
-  elseif pips == 3 then
-    -- 3-pin: three dots, diagonal (smaller and spaced out)
-    unidex.fill(cx - 12, cy - 13, 6, 6)
-    unidex.fill(cx - 3, cy - 3, 6, 6)
-    unidex.fill(cx + 6, cy + 7, 6, 6)
-  end
-end
-
 -- ---------- scoring ----------
 
 local function round100(x)
@@ -109,19 +86,20 @@ end
 
 -- ---------- screens ----------
 
+local MENU_TILES = {"5z.bmp", "6z.bmp", "7z.bmp"}
+local TILE_W, TILE_H = 40, 56
+local TILE_GAP = 2
+local TILE_Y = 42
+
 local function draw_menu()
   unidex.header("Rii Mahjong Scoring", "")
-  
-  -- Draw three tiles: 1-pin, 2-pin, 3-pin
-  local tw, th = 40, 54
-  local gap = 2
-  local total_w = (tw * 3) + (gap * 2)
+
+  -- Three tiles side by side: 3 x 40 + 2 x 2 = 124 px, centred.
+  local total_w = (#MENU_TILES * TILE_W) + ((#MENU_TILES - 1) * TILE_GAP)
   local start_x = math.floor((200 - total_w) / 2)
-  local start_y = 42
-  
-  draw_tile(start_x, start_y, tw, th, 1)
-  draw_tile(start_x + tw + gap, start_y, tw, th, 2)
-  draw_tile(start_x + tw + gap + tw + gap, start_y, tw, th, 3)
+  for i, file in ipairs(MENU_TILES) do
+    unidex.bitmap(file, start_x + (i - 1) * (TILE_W + TILE_GAP), TILE_Y)
+  end
 
   -- Kiriage toggle box
   local label = "Kiriage: " .. (kiriage and "ON" or "OFF")
@@ -189,7 +167,7 @@ local function draw_result()
   end
   unidex.centered(148, "tsumo", "small")
 
-  unidex.hints("", "new", "")
+  unidex.hints("home", "new", "")
 end
 
 function draw()
@@ -215,7 +193,11 @@ function onA()
     return "full"
   else
     -- Score screen: press A does nothing
-    return nil
+    screen = "menu"
+    player = 1
+    han    = 1
+    fu     = 30
+    return "full"
   end
 end
 

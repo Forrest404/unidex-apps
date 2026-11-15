@@ -21,7 +21,7 @@ A quick score lookup tool for Riichi Mahjong, supporting hands from 1 han up to 
   - Hold B = Back a field (or back to Menu from the first field)
   - Hold A = Back a field, the same as Hold B
 - **Result:**
-  - Press A = Nothing
+  - Press A = Homescreen
   - Press B = New score (resets to 1 han, 30 fu)
   - Hold A = Exit
 
